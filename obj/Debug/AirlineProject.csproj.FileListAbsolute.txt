@@ -4,3 +4,9 @@ D:\BrainAcademy\Proyectos\Project_2\AirlineProject\bin\Debug\AirlineProject.pdb
 D:\BrainAcademy\Proyectos\Project_2\AirlineProject\obj\Debug\AirlineProject.csprojResolveAssemblyReference.cache
 D:\BrainAcademy\Proyectos\Project_2\AirlineProject\obj\Debug\AirlineProject.exe
 D:\BrainAcademy\Proyectos\Project_2\AirlineProject\obj\Debug\AirlineProject.pdb
+D:\Documentos\GitHub\Project-2\bin\Debug\AirlineProject.exe.config
+D:\Documentos\GitHub\Project-2\obj\Debug\AirlineProject.exe
+D:\Documentos\GitHub\Project-2\obj\Debug\AirlineProject.pdb
+D:\Documentos\GitHub\Project-2\bin\Debug\AirlineProject.exe
+D:\Documentos\GitHub\Project-2\bin\Debug\AirlineProject.pdb
+D:\Documentos\GitHub\Project-2\obj\Debug\AirlineProject.csprojResolveAssemblyReference.cache

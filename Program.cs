@@ -34,17 +34,17 @@ namespace AirlineProject
                 {
                     if (inArrivals)
                     {
-                        mainMenuArrivals (int.Parse(optionMenu), arrivalsInfo, passengersArrivals);
+                        MainMenuArrivals (int.Parse(optionMenu), arrivalsInfo, passengersArrivals);
                     }
                     else
                     {
-                        mainMenuDepartures (int.Parse(optionMenu), departuresInfo, passengersDepartures);
+                        MainMenuDepartures (int.Parse(optionMenu), departuresInfo, passengersDepartures);
                     }
                 }
             }
         }
 
-        static void mainMenuArrivals(int option, List<Flights> listFlights, List<Passengers> listPassengers)
+        static void MainMenuArrivals(int option, List<Flights> listFlights, List<Passengers> listPassengers)
         {
             switch (option)
             {
@@ -77,7 +77,7 @@ namespace AirlineProject
                     Console.SetCursorPosition(0, 20);
                     Console.Write("1: ADD, 2: EDIT, 3:ERASE : ");
                     int flightOpMenu = int.Parse(Console.ReadLine());
-                    arrivalsFlightOptionMenu(flightOpMenu,ref listFlights);
+                    ArrivalsFlightOptionMenu(flightOpMenu,ref listFlights);
                     break;
 
                 case 5:
@@ -88,7 +88,7 @@ namespace AirlineProject
                     Console.SetCursorPosition(0, 20);
                     Console.Write("1: ADD, 2: EDIT, 3:ERASE : ");
                     int passengersOpMenu = int.Parse(Console.ReadLine());
-                    arrivalsPassengersOptionMenu(passengersOpMenu, listPassengers);
+                    ArrivalsPassengersOptionMenu(passengersOpMenu, listPassengers);
                     break;
 
                 case 6:
@@ -134,7 +134,7 @@ namespace AirlineProject
             }
         }
 
-        static void mainMenuDepartures(int option, List<Flights> listFlights, List<Passengers> listPassengers)
+        static void MainMenuDepartures(int option, List<Flights> listFlights, List<Passengers> listPassengers)
         {
             switch (option)
             {
@@ -167,7 +167,7 @@ namespace AirlineProject
                     Console.SetCursorPosition(0, 20);
                     Console.Write("1: ADD, 2: EDIT, 3:ERASE : ");
                     int flightOpMenu = int.Parse(Console.ReadLine());
-                    departuresFlightOptionMenu(flightOpMenu, ref listFlights);
+                    DeparturesFlightOptionMenu(flightOpMenu, ref listFlights);
                     break;
 
                 case 5:
@@ -178,7 +178,7 @@ namespace AirlineProject
                     Console.SetCursorPosition(0, 20);
                     Console.Write("1: ADD, 2: EDIT, 3:ERASE : ");
                     int passengersOpMenu = int.Parse(Console.ReadLine());
-                    departuresPassengersOptionMenu(passengersOpMenu, listPassengers);
+                    DeparturesPassengersOptionMenu(passengersOpMenu, listPassengers);
                     break;
 
                 case 6:
@@ -224,7 +224,8 @@ namespace AirlineProject
             }
         }
 
-        private static void arrivalsPassengersOptionMenu(int option, List<Passengers> passengers)
+        private static void ArrivalsPassengersOptionMenu
+            (int option, List<Passengers> passengers)
         {
             DataStrings dataStr = new DataStrings();
 
@@ -267,7 +268,7 @@ namespace AirlineProject
             }
         }
 
-        private static void departuresPassengersOptionMenu(int option, List<Passengers> passengers )
+        private static void DeparturesPassengersOptionMenu(int option, List<Passengers> passengers )
         {
             DataStrings dataStr = new DataStrings();
 
@@ -310,7 +311,7 @@ namespace AirlineProject
             }
         }
 
-        private static void arrivalsFlightOptionMenu(int flightOpMenu, ref List<Flights> flights)
+        private static void ArrivalsFlightOptionMenu(int flightOpMenu, ref List<Flights> flights)
         {
             DataStrings dataStr = new DataStrings();
 
@@ -353,7 +354,7 @@ namespace AirlineProject
             }
         }
 
-        private static void departuresFlightOptionMenu(int flightOpMenu, ref List<Flights> flights)
+        private static void DeparturesFlightOptionMenu(int flightOpMenu, ref List<Flights> flights)
         {
             DataStrings dataStr = new DataStrings();
 
