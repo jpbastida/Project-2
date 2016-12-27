@@ -12,7 +12,12 @@ namespace AirlineProject
         static Departures departures = new Departures();
         static ArrivalsPassengers passengersListArrivals = new ArrivalsPassengers();
         static DeparturesPassengers passengersListDepartures = new DeparturesPassengers();
-        static bool inArrivals = true;
+        static bool _InArrivals = true;
+        public static bool InArrivals
+        {
+            get { return _InArrivals; }
+            set { _InArrivals = value; }
+        }
 
         static void Main(string[] args)
         {
@@ -32,93 +37,52 @@ namespace AirlineProject
                 optionMenu = Console.ReadLine();
                 if (optionMenu != String.Empty)
                 {
-                    if (inArrivals)
+                    if (InArrivals)
                     {
-                        MainMenuArrivals (int.Parse(optionMenu), arrivalsInfo, passengersArrivals);
+                        MainMenu (int.Parse(optionMenu), arrivalsInfo, passengersArrivals);
                     }
                     else
                     {
-                        MainMenuDepartures (int.Parse(optionMenu), departuresInfo, passengersDepartures);
+                        MainMenu (int.Parse(optionMenu), departuresInfo, passengersDepartures);
                     }
                 }
             }
         }
 
-        static void MainMenuArrivals(int option, List<Flights> listFlights, List<Passengers> listPassengers)
+        static void MainMenu(int option, List<Flights> listFlights, List<Passengers> listPassengers)
         {
             switch (option)
             {
                 case 1:
-                    departures.ShowScreen();
-                    departures.ShowFlights(departuresInfo);
-                    inArrivals = false;
+                    SelectScreenInfo();
                     break;
 
                 case 2:
-                    arrivals.ShowScreen();
-                    arrivals.ShowFlights(listFlights);
+                    ShowFlightsList(listFlights);
                     break;
 
                 case 3:
-                    Console.SetCursorPosition(0, 20);
-                    Console.WriteLine("                         ");
-                    Console.SetCursorPosition(0, 20);
-                    Console.Write("CHOOSE A FLIGHT: ");
-                    string flightChosen = Console.ReadLine();
-                    passengersListArrivals.ShowPassengersHeaders();
-                    passengersListArrivals.ShowPassengers(listPassengers, flightChosen);
+                    ShowPassengersList(listPassengers);
                     break;
 
                 case 4:
-                    arrivals.ShowScreen();
-                    arrivals.ShowFlights(arrivalsInfo);
-                    Console.SetCursorPosition(0, 20);
-                    Console.WriteLine("                         ");
-                    Console.SetCursorPosition(0, 20);
-                    Console.Write("1: ADD, 2: EDIT, 3:ERASE : ");
-                    int flightOpMenu = int.Parse(Console.ReadLine());
-                    ArrivalsFlightOptionMenu(flightOpMenu,ref listFlights);
+                    OptionForFlight(listFlights);
                     break;
 
                 case 5:
-                    passengersListArrivals.ShowPassengersHeaders();
-                    passengersListArrivals.ShowPassengers(listPassengers);
-                    Console.SetCursorPosition(0, 20);
-                    Console.WriteLine("                             ");
-                    Console.SetCursorPosition(0, 20);
-                    Console.Write("1: ADD, 2: EDIT, 3:ERASE : ");
-                    int passengersOpMenu = int.Parse(Console.ReadLine());
-                    ArrivalsPassengersOptionMenu(passengersOpMenu, listPassengers);
+                    OptionsForPassengers(listPassengers);
                     break;
 
                 case 6:
-                    passengersListArrivals.ShowPassengersHeaders();
-                    passengersListArrivals.ShowPassengers(listPassengers);
-                    Console.SetCursorPosition(0, 20);
-                    Console.WriteLine("                               ");
-                    Console.SetCursorPosition(0, 20);
-                    Console.Write("WRITE NAME/SURNAME: ");
-                    passengersListArrivals.SearchPassenger(listPassengers, Console.ReadLine());
+                    SearchPassenger(listPassengers);
                     break;
 
                 case 7:
-                    passengersListArrivals.ShowPassengersHeaders();
-                    passengersListArrivals.ShowPassengers(listPassengers);
-                    Console.SetCursorPosition(0, 20);
-                    Console.WriteLine("                                 ");
-                    Console.SetCursorPosition(0, 20);
-                    Console.Write("WRITE PASSPORT No.: ");
-                    passengersListArrivals.SearchPassport(listPassengers, Console.ReadLine());
+                    SearchByPassport(listPassengers);
                     break;
 
                 case 8:
-                    arrivals.ShowScreen();
-                    arrivals.ShowFlights(arrivalsInfo);
-                    Console.SetCursorPosition(0, 20);
-                    Console.WriteLine("                               ");
-                    Console.SetCursorPosition(0, 20);
-                    Console.Write("WRITE FLIGHT: ");
-                    arrivals.SearchFlight(listFlights, Console.ReadLine());
+                    SearchByFlight(listFlights);
                     break;
 
                 case 9:
@@ -130,133 +94,170 @@ namespace AirlineProject
                     Console.ReadLine();
                     arrivals.ShowScreen();
                     arrivals.ShowFlights(arrivalsInfo);
+                    InArrivals = true;
                     break;
             }
         }
 
-        static void MainMenuDepartures(int option, List<Flights> listFlights, List<Passengers> listPassengers)
+        private static void SearchByFlight(List<Flights> listFlights)
         {
-            switch (option)
+            ShowFlightList();
+            Console.SetCursorPosition(0, 20);
+            Console.WriteLine("                               ");
+            Console.SetCursorPosition(0, 20);
+            Console.Write("WRITE FLIGHT: ");
+            arrivals.SearchFlight(listFlights, Console.ReadLine());
+        }
+
+        private static void SearchByPassport(List<Passengers> listPassengers)
+        {
+            ShowListPassengers(listPassengers);
+            Console.SetCursorPosition(0, 20);
+            Console.WriteLine("                                 ");
+            Console.SetCursorPosition(0, 20);
+            Console.Write("WRITE PASSPORT No.: ");
+            if (InArrivals)
             {
-                case 1:
-                    arrivals.ShowScreen();
-                    arrivals.ShowFlights(arrivalsInfo);
-                    inArrivals = true;
-                    break;
-
-                case 2:
-                    departures.ShowScreen();
-                    departures.ShowFlights(listFlights);
-                    break;
-
-                case 3:
-                    Console.SetCursorPosition(0, 20);
-                    Console.WriteLine("                         ");
-                    Console.SetCursorPosition(0, 20);
-                    Console.Write("CHOOSE A FLIGHT: ");
-                    string flightChosen = Console.ReadLine();
-                    passengersListDepartures.ShowPassengersHeaders();
-                    passengersListDepartures.ShowPassengers(listPassengers, flightChosen);
-                    break;
-
-                case 4:
-                    departures.ShowScreen();
-                    departures.ShowFlights(arrivalsInfo);
-                    Console.SetCursorPosition(0, 20);
-                    Console.WriteLine("                         ");
-                    Console.SetCursorPosition(0, 20);
-                    Console.Write("1: ADD, 2: EDIT, 3:ERASE : ");
-                    int flightOpMenu = int.Parse(Console.ReadLine());
-                    DeparturesFlightOptionMenu(flightOpMenu, ref listFlights);
-                    break;
-
-                case 5:
-                    passengersListDepartures.ShowPassengersHeaders();
-                    passengersListDepartures.ShowPassengers(listPassengers);
-                    Console.SetCursorPosition(0, 20);
-                    Console.WriteLine("                             ");
-                    Console.SetCursorPosition(0, 20);
-                    Console.Write("1: ADD, 2: EDIT, 3:ERASE : ");
-                    int passengersOpMenu = int.Parse(Console.ReadLine());
-                    DeparturesPassengersOptionMenu(passengersOpMenu, listPassengers);
-                    break;
-
-                case 6:
-                    passengersListDepartures.ShowPassengersHeaders();
-                    passengersListDepartures.ShowPassengers(listPassengers);
-                    Console.SetCursorPosition(0, 20);
-                    Console.WriteLine("                               ");
-                    Console.SetCursorPosition(0, 20);
-                    Console.Write("WRITE NAME/SURNAME: ");
-                    passengersListDepartures.SearchPassenger(listPassengers, Console.ReadLine());
-                    break;
-
-                case 7:
-                    passengersListDepartures.ShowPassengersHeaders();
-                    passengersListDepartures.ShowPassengers(listPassengers);
-                    Console.SetCursorPosition(0, 20);
-                    Console.WriteLine("                                 ");
-                    Console.SetCursorPosition(0, 20);
-                    Console.Write("WRITE PASSPORT No.: ");
-                    passengersListDepartures.SearchPassport(listPassengers, Console.ReadLine());
-                    break;
-
-                case 8:
-                    departures.ShowScreen();
-                    departures.ShowFlights(arrivalsInfo);
-                    Console.SetCursorPosition(0, 20);
-                    Console.WriteLine("                               ");
-                    Console.SetCursorPosition(0, 20);
-                    Console.Write("WRITE FLIGHT: ");
-                    departures.SearchFlight(listFlights, Console.ReadLine());
-                    break;
-
-                case 9:
-                    departures.SearchCheapest(listFlights);
-                    break;
-
-                default:
-                    Console.WriteLine("WRONG OPTION! Press any key to continue...");
-                    Console.ReadLine();
-                    departures.ShowScreen();
-                    departures.ShowFlights(arrivalsInfo);
-                    break;
+                passengersListArrivals.SearchPassport(listPassengers, Console.ReadLine());
+            }
+            else
+            {
+                passengersListDepartures.SearchPassport(listPassengers, Console.ReadLine());
             }
         }
 
-        private static void ArrivalsPassengersOptionMenu
-            (int option, List<Passengers> passengers)
+        private static void SearchPassenger(List<Passengers> listPassengers)
+        {
+            ShowListPassengers(listPassengers);
+            Console.SetCursorPosition(0, 20);
+            Console.WriteLine("                               ");
+            Console.SetCursorPosition(0, 20);
+            Console.Write("WRITE NAME/SURNAME: ");
+            if (InArrivals)
+            {
+                passengersListArrivals.SearchPassenger(listPassengers, Console.ReadLine());
+            }
+            else
+            {
+                passengersListDepartures.SearchPassenger(listPassengers, Console.ReadLine());
+            }
+        }
+
+        private static void OptionsForPassengers(List<Passengers> listPassengers)
+        {
+            ShowListPassengers(listPassengers);
+            Console.SetCursorPosition(0, 20);
+            Console.WriteLine("                             ");
+            Console.SetCursorPosition(0, 20);
+            Console.Write("1: ADD, 2: EDIT, 3:ERASE : ");
+            int passengersOpMenu = int.Parse(Console.ReadLine());
+            PassengersOptionMenu(passengersOpMenu, ref listPassengers);
+        }
+
+        private static void OptionForFlight(List<Flights> listFlights)
+        {
+            ShowFlightList();
+            Console.SetCursorPosition(0, 20);
+            Console.WriteLine("                         ");
+            Console.SetCursorPosition(0, 20);
+            Console.Write("1: ADD, 2: EDIT, 3:ERASE : ");
+            int flightOpMenu = int.Parse(Console.ReadLine());
+            FlightOptionMenu(flightOpMenu, ref listFlights);
+        }
+
+        private static void ShowPassengersList(List<Passengers> listPassengers)
+        {
+            Console.SetCursorPosition(0, 20);
+            Console.WriteLine("                         ");
+            Console.SetCursorPosition(0, 20);
+            Console.Write("CHOOSE A FLIGHT: ");
+            string flightChosen = Console.ReadLine();
+            if (InArrivals)
+            {
+                passengersListArrivals.ShowPassengersHeaders();
+                passengersListArrivals.ShowPassengers(listPassengers, flightChosen);
+            }
+            else
+            {
+                passengersListDepartures.ShowPassengersHeaders();
+                passengersListDepartures.ShowPassengers(listPassengers, flightChosen);
+            }
+        }
+
+        private static void ShowFlightsList(List<Flights> listFlights)
+        {
+            if (InArrivals)
+            {
+                arrivals.ShowScreen();
+                arrivals.ShowFlights(listFlights);
+            }
+            else
+            {
+                departures.ShowScreen();
+                departures.ShowFlights(listFlights);
+            }
+        }
+
+        private static void SelectScreenInfo()
+        {
+            if (InArrivals)
+            {
+                departures.ShowScreen();
+                departures.ShowFlights(departuresInfo);
+                InArrivals = false;
+            }
+            else
+            {
+                arrivals.ShowScreen();
+                arrivals.ShowFlights(arrivalsInfo);
+                InArrivals = true;
+            }
+        }
+
+        private static void ShowListPassengers(List<Passengers> listPassengers)
+        {
+            if (InArrivals)
+            {
+                passengersListArrivals.ShowPassengersHeaders();
+                passengersListArrivals.ShowPassengers(listPassengers);
+            }
+            else
+            {
+                passengersListDepartures.ShowPassengersHeaders();
+                passengersListDepartures.ShowPassengers(listPassengers);
+            }
+        }
+
+        private static void ShowFlightList()
+        {
+            if (InArrivals)
+            {
+                arrivals.ShowScreen();
+                arrivals.ShowFlights(arrivalsInfo);
+            }
+            else
+            {
+                departures.ShowScreen();
+                departures.ShowFlights(departuresInfo);
+            }
+        }
+
+        private static void PassengersOptionMenu(int option, ref List<Passengers> passengers)
         {
             DataStrings dataStr = new DataStrings();
 
             switch (option)
             {
                 case 1:
-                    passengersListArrivals.AddPassenger(ref passengers);
-                    passengersListArrivals.ShowPassengersHeaders();
-                    passengersListArrivals.ShowPassengers(passengers);
+                    AddPassenger(ref passengers);
                     break;
 
                 case 2:
-                    Console.SetCursorPosition(0, 20);
-                    Console.WriteLine("                                 ");
-                    Console.SetCursorPosition(0, 20);
-                    Console.Write("CHOOSE INDEX: ");
-                    int n = int.Parse(Console.ReadLine());
-                    passengersListArrivals.EditPassenger(ref passengers, n);
-                    passengersListArrivals.ShowPassengersHeaders();
-                    passengersListArrivals.ShowPassengers(passengers);
+                    EditPassenger(ref passengers);
                     break;
 
                 case 3:
-                    Console.SetCursorPosition(0, 20);
-                    Console.WriteLine("                                 ");
-                    Console.SetCursorPosition(0, 20);
-                    Console.Write("CHOOSE INDEX: ");
-                    int ind = int.Parse(Console.ReadLine());
-                    passengersListArrivals.ErasePassenger(ref passengers, ind);
-                    passengersListArrivals.ShowPassengersHeaders();
-                    passengersListArrivals.ShowPassengers(passengers);
+                    ErasePassenger(ref passengers);
                     break;
 
                 default:
@@ -268,81 +269,80 @@ namespace AirlineProject
             }
         }
 
-        private static void DeparturesPassengersOptionMenu(int option, List<Passengers> passengers )
+        private static void ErasePassenger(ref List<Passengers> passengers)
         {
-            DataStrings dataStr = new DataStrings();
-
-            switch (option)
+            Console.SetCursorPosition(0, 20);
+            Console.WriteLine("                                 ");
+            Console.SetCursorPosition(0, 20);
+            Console.Write("CHOOSE INDEX: ");
+            int ind = int.Parse(Console.ReadLine());
+            if (InArrivals)
             {
-                case 1:
-                    passengersListDepartures.AddPassenger(ref passengers);
-                    passengersListDepartures.ShowPassengersHeaders();
-                    passengersListDepartures.ShowPassengers(passengers);
-                    break;
-
-                case 2:
-                    Console.SetCursorPosition(0, 20);
-                    Console.WriteLine("                                 ");
-                    Console.SetCursorPosition(0, 20);
-                    Console.Write("CHOOSE INDEX: ");
-                    int n = int.Parse(Console.ReadLine());
-                    passengersListDepartures.EditPassenger(ref passengers, n);
-                    passengersListDepartures.ShowPassengersHeaders();
-                    passengersListDepartures.ShowPassengers(passengers);
-                    break;
-
-                case 3:
-                    Console.SetCursorPosition(0, 20);
-                    Console.WriteLine("                                 ");
-                    Console.SetCursorPosition(0, 20);
-                    Console.Write("CHOOSE INDEX: ");
-                    int ind = int.Parse(Console.ReadLine());
-                    passengersListDepartures.ErasePassenger(ref passengers, ind);
-                    passengersListDepartures.ShowPassengersHeaders();
-                    passengersListDepartures.ShowPassengers(passengers);
-                    break;
-
-                default:
-                    Console.WriteLine("WRONG OPTION! Press any key to continue...");
-                    Console.ReadLine();
-                    departures.ShowScreen();
-                    departures.ShowFlights(arrivalsInfo);
-                    break;
+                passengersListArrivals.ErasePassenger(ref passengers, ind);
+                passengersListArrivals.ShowPassengersHeaders();
+                passengersListArrivals.ShowPassengers(passengers);
+            }
+            else
+            {
+                passengersListDepartures.ErasePassenger(ref passengers, ind);
+                passengersListDepartures.ShowPassengersHeaders();
+                passengersListDepartures.ShowPassengers(passengers);
             }
         }
 
-        private static void ArrivalsFlightOptionMenu(int flightOpMenu, ref List<Flights> flights)
+        private static void EditPassenger(ref List<Passengers> passengers)
+        {
+            Console.SetCursorPosition(0, 20);
+            Console.WriteLine("                                 ");
+            Console.SetCursorPosition(0, 20);
+            Console.Write("CHOOSE INDEX: ");
+            int n = int.Parse(Console.ReadLine());
+            if (InArrivals)
+            {
+                passengersListArrivals.EditPassenger(ref passengers, n);
+                passengersListArrivals.ShowPassengersHeaders();
+                passengersListArrivals.ShowPassengers(passengers);
+            }
+            else
+            {
+                passengersListDepartures.EditPassenger(ref passengers, n);
+                passengersListDepartures.ShowPassengersHeaders();
+                passengersListDepartures.ShowPassengers(passengers);
+            }                 
+        }
+
+        private static void AddPassenger(ref List<Passengers> passengers)
+        {
+            if (InArrivals)
+            {
+                passengersListArrivals.AddPassenger(ref passengers);
+                passengersListArrivals.ShowPassengersHeaders();
+                passengersListArrivals.ShowPassengers(passengers);
+            }
+            else
+            {
+                passengersListDepartures.AddPassenger(ref passengers);
+                passengersListDepartures.ShowPassengersHeaders();
+                passengersListDepartures.ShowPassengers(passengers);
+            }
+        }
+
+        private static void FlightOptionMenu(int flightOpMenu, ref List<Flights> flights)
         {
             DataStrings dataStr = new DataStrings();
 
             switch (flightOpMenu)
             {
                 case 1:
-                    arrivals.AddFlight(ref flights);
-                    arrivals.ShowScreen();
-                    arrivals.ShowFlights(arrivalsInfo);
+                    AddFlight(ref flights);
                     break;
 
                 case 2:
-                    Console.SetCursorPosition(0, 20);
-                    Console.WriteLine("                                 ");
-                    Console.SetCursorPosition(0, 20);
-                    Console.Write("CHOOSE INDEX: ");
-                    int n = int.Parse(Console.ReadLine());
-                    arrivals.EditFlight(ref flights, n);
-                    arrivals.ShowScreen();
-                    arrivals.ShowFlights(flights);
+                    EditFlight(ref flights);
                     break;
 
                 case 3:
-                    Console.SetCursorPosition(0, 20);
-                    Console.WriteLine("                                 ");
-                    Console.SetCursorPosition(0, 20);
-                    Console.Write("CHOOSE INDEX: ");
-                    int ind = int.Parse(Console.ReadLine());
-                    arrivals.EraseFlight(ref flights, ind);
-                    arrivals.ShowScreen();
-                    arrivals.ShowFlights(flights);
+                    EraseFlight(ref flights);
                     break;
 
                 default:
@@ -354,46 +354,61 @@ namespace AirlineProject
             }
         }
 
-        private static void DeparturesFlightOptionMenu(int flightOpMenu, ref List<Flights> flights)
+        private static void EraseFlight(ref List<Flights> flights)
         {
-            DataStrings dataStr = new DataStrings();
-
-            switch (flightOpMenu)
+            Console.SetCursorPosition(0, 20);
+            Console.WriteLine("                                 ");
+            Console.SetCursorPosition(0, 20);
+            Console.Write("CHOOSE INDEX: ");
+            int ind = int.Parse(Console.ReadLine());
+            if (InArrivals)
             {
-                case 1:
-                    departures.AddFlight(ref flights);
-                    departures.ShowScreen();
-                    departures.ShowFlights(arrivalsInfo);
-                    break;
+                arrivals.EraseFlight(ref flights, ind);
+                arrivals.ShowScreen();
+                arrivals.ShowFlights(flights);
+            }
+            else
+            {
+                departures.EraseFlight(ref flights, ind);
+                departures.ShowScreen();
+                departures.ShowFlights(flights);
+            }
+        }
 
-                case 2:
-                    Console.SetCursorPosition(0, 20);
-                    Console.WriteLine("                                 ");
-                    Console.SetCursorPosition(0, 20);
-                    Console.Write("CHOOSE INDEX: ");
-                    int n = int.Parse(Console.ReadLine());
-                    departures.EditFlight(ref flights, n);
-                    departures.ShowScreen();
-                    departures.ShowFlights(flights);
-                    break;
+        private static void EditFlight(ref List<Flights> flights)
+        {
+            Console.SetCursorPosition(0, 20);
+            Console.WriteLine("                                  ");
+            Console.SetCursorPosition(0, 20);
+            Console.Write("CHOOSE INDEX: ");
+            int n = int.Parse(Console.ReadLine());
+            if (InArrivals)
+            {
+                arrivals.EditFlight(ref flights, n);
+                arrivals.ShowScreen();
+                arrivals.ShowFlights(flights);
+            }
+            else
+            {
+                departures.EditFlight(ref flights, n);
+                departures.ShowScreen();
+                departures.ShowFlights(flights);
+            }
+        }
 
-                case 3:
-                    Console.SetCursorPosition(0, 20);
-                    Console.WriteLine("                                 ");
-                    Console.SetCursorPosition(0, 20);
-                    Console.Write("CHOOSE INDEX: ");
-                    int ind = int.Parse(Console.ReadLine());
-                    departures.EraseFlight(ref flights, ind);
-                    departures.ShowScreen();
-                    departures.ShowFlights(flights);
-                    break;
-
-                default:
-                    Console.WriteLine("WRONG OPTION! Press any key to continue...");
-                    Console.ReadLine();
-                    departures.ShowScreen();
-                    departures.ShowFlights(arrivalsInfo);
-                    break;
+        private static void AddFlight(ref List<Flights> flights)
+        {
+            if (InArrivals)
+            {
+                arrivals.AddFlight(ref flights);
+                arrivals.ShowScreen();
+                arrivals.ShowFlights(arrivalsInfo);
+            }
+            else
+            {
+                departures.AddFlight(ref flights);
+                departures.ShowScreen();
+                departures.ShowFlights(departuresInfo);
             }
         }
     }
